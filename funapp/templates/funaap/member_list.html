@@ -1,0 +1,65 @@
+{% extends'funapp/base.html' %}
+{% block title %}Python Members{% endblock %}
+
+{%block content%}
+    <div class="row">
+        {%if profiles%}
+           {%for prof in profiles%}
+              <div class="col-sm-3">
+                  <div class="card card-body my-1" style="background-color: {% if prof.is_male%}black;{% else%}purple;{%endif%}">
+                      <h4 class="text-center"
+                      style="white-space: nowrap;
+                      overflow:hidden;
+                      text-overflow: ellipsis;
+                      max-width:90%;
+                      border-bottom:1px solid black;
+                      font-family: Kaushan Script;">{{ prof.name}}
+                      </h4>
+                      <hr>
+                          <img src="{{prof.photo.url}}" class="rounded-circle mx-auto  img-fluid"alt="" style="height:150px; width:150px">
+                          <div class="caption">
+                              <h5 class="text-center" style="font-family:Parisienne;">{{prof.occupation}}</h5>
+                              <h6 class="text-center">
+                                  style="white-space: nowrap;
+                                  overflow:hidden;
+                                  text-overflow: ellipsis;
+                                  max-width:90%;
+                                  border-bottom:1px solid black;
+                                  font-family:Playball">
+                                  {{prof.slogan}}</h6>
+                              <button class="btn btn-info btn-sm" data-toggle="modal" data-target="modal">
+                                  <i class="fas fa-info">
+                                  </i>
+                              </button>
+                              <a href="{% url 'funapp:delete-member'prof.id'%} class='btn btn-danger btn-sm" style="float: right;"></a>
+                                      <i class="fas fa-trash"></i>
+                          </div>
+                      </hr>
+                  </div>
+                  <!--modal-->
+                  <div class="modal fade" id="modal-{{prof.id}}" role="dialog">
+                      <div class="modal-dialog">
+                      <div class="content">
+                         <div class="modal-header">
+                            <h4 class="modal-title">{{prof.name}}</h4>
+                             <button type="button" class="close" data-dismiss="modal">submit</button>
+                         </div>
+                     <div class="modal-body">
+                         <p{{prof.name}} is {{prof.age}} tears old.{%if prof.is_male%}He{%else%}She {%endif%}is a{{prof.nationality}}
+                         citizen.{%if prof.is_male%}He{%else%}She {%endif%}went to {{prof.primary }}school and{{prof.secondary}}high school and later went to {{prof.campus}}university
+                         to pursue {{prof.course}}.{%if prof.is_male%}He{%else%}She {%endif%}is a {{prof.occupation}}by profession.You can easily reach her via:<a href="mail to:email@gmail.com">{{prof.email}}.
+                         {%if prof.is_male%}He{%else%}lives in{{prof.residence}}.{%if prof.is_male%}He{%else%}has a strong belief{{prof.slogan}}.{%if prof.is_male%}He{%else%}loves
+                         {{prof.hobby}}></a>
+                     </div>
+                          <div class="modal-footer">
+                              <a href="{% url 'funapp:update-member'prof.id%}" class="btn btn-outline-primary btn-sm">
+                              </a>
+                          </div>
+                  </div>
+                     </div>
+                     </div>
+              </div>
+            {%endfor%}
+        {%endif%}
+    </div>
+{%endblock%}
